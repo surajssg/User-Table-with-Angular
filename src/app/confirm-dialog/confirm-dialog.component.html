@@ -1,0 +1,12 @@
+<div>
+    <div class="content-container">
+        <div [align]="'end'">
+        <mat-icon id="close-icon" (click)="closeDialog()">close</mat-icon><br>
+        </div>
+        <span class="content-span full-width"> {{ data.message }}</span><br><br>
+        <div [align]="'end'">
+            <button mat-flat-button  color="warn" id="no-button" [mat-dialog-close]="false">NO</button>
+        <button mat-flat-button color="primary" id="yes-button" style="margin-left: 8px;" [mat-dialog-close]="true">YES</button>
+        </div>
+    </div>
+</div>

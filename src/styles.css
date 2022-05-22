@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+     height: 100%;
+     }
+
+body {
+     margin: 0; font-family: Roboto,
+      "Helvetica Neue", 
+      sans-serif;
+     }
+/* .confirm-dialog-container .mat-dialog-container {
+    border-radius: .25em .25em .4em .4em;
+    padding: 0px;
+}
+
+.confirm-dialog-container .content-container{
+    margin: 5px 5px 15px 5px ;
+    color: #8f9cb5;
+    display: flex;
+}
+
+.confirm-dialog-container #close-icon{
+    margin-left: auto;
+    order: 2;
+    font-weight: bolder;
+} */
