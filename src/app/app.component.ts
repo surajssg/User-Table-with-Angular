@@ -40,12 +40,16 @@ export class AppComponent implements OnInit {
     private http:HttpClient,
     private fbService:FirebaseService,
     // private updateSubscription: Subscription
+    
+
     ) {};
 
 
-ngOnInit(): void {
+ public ngOnInit():void {
   this.getAllUsers();
 }
+
+
   openDialog() {
     this.dialog
       .open(DialogComponent, {
@@ -62,16 +66,40 @@ ngOnInit(): void {
 
 
   getAllUsers():any {
-    setInterval(() => {
-      this.fbService.getUser()
-     .subscribe((res :any) =>{
-      this.dataSource = new MatTableDataSource(res);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
-  }, 4000);
+    let arr:any = []
+    // this.fbService.getUser();
+  this.fbService.getUser().subscribe((res:any) =>{
+    console.log(typeof res)
+    const users = res;
+    const keys = Object.keys(users);
+    keys.forEach((key, index) => {
+      console.log(users[key])
+      arr.push(users[key])
+     
+  });
+  this.dataSource = new MatTableDataSource(arr);
+  this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
+  console.log()
+    
+  })
+  }
+  // const res = this.fbService.postArray;
+  // this.fbService.getUser();
+   
+  
 
-}
+  // const res = this.fbService.postArray;
+  
+  // .subscribe((info:any) =>{
+  //   console.log(info)
+  // })
+  // console.log(res)
+  
+  // setInterval(() => {
+  //}, 4000);
+
+
     
     
     // const res = this.dataSource = this.localStorageData.getLocalStorageData();
@@ -81,7 +109,7 @@ ngOnInit(): void {
       .openConfirmDialog('Are you sure to do this operation?')
       .afterClosed()
       .subscribe((res) => {
-        if (res) {          
+        if (res) {    
           this.dialog
             .open(DialogComponent, {
               width: '30%',

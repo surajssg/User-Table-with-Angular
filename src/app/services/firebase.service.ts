@@ -12,6 +12,8 @@ import { post } from '../post.model';
 })
 export class FirebaseService implements OnInit{
   loadedPosts : any = [];
+  postArray: any  =[];
+
 
   constructor(
     private http:HttpClient){}
@@ -29,43 +31,37 @@ postUser(postData: {userName:post}){
 };
 
 
-onFetchPosts(){
-  this.getUser();
-}
+// onFetchPosts(){
+//   this.getUser();
+// }
 
 
 getUser():any{
-  let retunAray:any  =[];
+    this.postArray =[]
     return this.http.get<{[ key:string ] : post}>("https://assignment-992d2-default-rtdb.firebaseio.com/posts.json")
-    .pipe(map((responseData) =>{
-      const postArray: post[] =[];
-      for(const key in responseData){
-        if(responseData.hasOwnProperty(key)){
-          postArray.push({ ...responseData[key] ,id: key}) 
-        }
-      }
-      console.log(postArray)   
-      return postArray;
-    }))
+    // .pipe(map((responsedata:any) =>{
+    //   for (const key in responsedata){
+    //   if(responsedata.hasOwnProperty(key))
+    //    this.postArray.push({...responsedata[key], id: key})
+    //   }
+    //   console.log(this.postArray)
+    //   console.log(typeof this.postArray)
+    //   return this.postArray
+    // }))
     // .subscribe(posts =>{
-    //   console.log(posts)
-    //   retunAray = posts;
-    //   return posts;
-    // });
-    // console.log(retunAray)
+    //   console.log(posts);
+    //   return posts
+    //   });    
+    }
 
-}
 
  deleteUser(hashKey:number){
   const endPoint = 'https://assignment-992d2-default-rtdb.firebaseio.com/posts/'+ hashKey+'.json';
   console.log(hashKey);
   return this.http.delete<any>(endPoint);
-
 }
 
 putUser(data:any,id:any){
-  console.log(data)
-  console.log(id)
   const url = "https://assignment-992d2-default-rtdb.firebaseio.com/posts/"+id+'.json';
   return this.http.put<any>(url, data);
 }

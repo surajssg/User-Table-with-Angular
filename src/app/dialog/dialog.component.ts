@@ -79,6 +79,7 @@ export class DialogComponent implements OnInit {
             this.userForm.value.id
           ).subscribe(res=>{
             console.log(res)
+
             //window. location. reload();
 
           });
