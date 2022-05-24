@@ -6,10 +6,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DsService } from './shared/ds.service';
+import { DsService } from './services/shared/ds.service';
 // import { LocalStorageService } from './services/local-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from './services/firebase.service';
+// import { Observable,Subscription, interval  } from 'rxjs';
+import { Subject} from 'rxjs'
+
 
 
 @Component({
@@ -18,6 +21,8 @@ import { FirebaseService } from './services/firebase.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+  private refreshneeded = new Subject<void>(); 
   text = '!!User deleted successfully';
   text4 = 'User added successfully';
 
@@ -33,12 +38,14 @@ export class AppComponent implements OnInit {
     private dialogService: DsService,
     // private localStorageData: LocalStorageService,
     private http:HttpClient,
-    private fbService:FirebaseService
-  ) {}
+    private fbService:FirebaseService,
+    // private updateSubscription: Subscription
+    ) {};
 
-  ngOnInit(): void {
-  //this.getAllUsers();
-  }
+
+ngOnInit(): void {
+  this.getAllUsers();
+}
   openDialog() {
     this.dialog
       .open(DialogComponent, {
@@ -47,25 +54,28 @@ export class AppComponent implements OnInit {
       .afterClosed()
       .subscribe((val) => {
         if (val === 'save') {
-          this.getAllUsers();
+         this.getAllUsers();
         }
       });
   }
 
 
-  getAllUsers() {
+
+  getAllUsers():any {
     setInterval(() => {
-      // const res = this.dataSource = this.localStorageData.getLocalStorageData();
-      const res:any = this.fbService.getUser()
-      //console.log(res)
+      this.fbService.getUser()
+     .subscribe((res :any) =>{
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }, 1000);
-  };
+    })
+  }, 4000);
 
+}
+    
+    
+    // const res = this.dataSource = this.localStorageData.getLocalStorageData();
   
-
   editUser(row: any) {
     this.dialogService
       .openConfirmDialog('Are you sure to do this operation?')
@@ -80,7 +90,7 @@ export class AppComponent implements OnInit {
             .afterClosed()
             .subscribe((val) => {
               if (val === 'update') {
-                this.getAllUsers();
+              this.getAllUsers();
               }
             });
         }
@@ -94,11 +104,11 @@ export class AppComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          //console.log(id);
-          this.fbService.deleteUser(id)
-
+          this.fbService.deleteUser(id).subscribe(responseData=>{
+            console.log(responseData);
+            // window. location. reload();
+          })
           this.snackBar.open(this.text.toString(),'',{
-
             duration:3000,
             verticalPosition:'top'
           })
@@ -110,13 +120,8 @@ export class AppComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
-
-
-
-
 }

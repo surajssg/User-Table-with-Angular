@@ -53,6 +53,7 @@ export class DialogComponent implements OnInit {
         if (this.userForm.valid) {
           // this.localStorageService.addDataLocalStorage(this.userForm.value);
           const postData = this.userForm.value
+          console.log(postData)
           this.fbService.postUser(postData)
           console.log(this.userForm.value);
           this.dialogRef.close('save');
@@ -76,10 +77,13 @@ export class DialogComponent implements OnInit {
           this.fbService.putUser(
             this.userForm.value,
             this.userForm.value.id
-          )
+          ).subscribe(res=>{
+            console.log(res)
+            //window. location. reload();
+
+          });
           this.dialogRef.close('update');
           this.snackBar.open(this.text1.toString(),'',{
-
             duration:3000,
             verticalPosition:'top'
           })
