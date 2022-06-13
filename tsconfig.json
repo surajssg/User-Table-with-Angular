@@ -3,6 +3,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      
+      "new-lib": [
+        "dist/new-lib/new-lib",
+        "dist/new-lib"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

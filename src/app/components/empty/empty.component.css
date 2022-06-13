@@ -1,0 +1,25 @@
+.spinner{
+    margin: auto;
+    padding-left: 120px;
+}
+.txt{
+    padding-left: 20px;
+}
+.cls{
+    padding-left: 150px;
+}
+.all{
+    margin:auto;
+    padding:auto;
+    padding-left: 40%;
+    background-color: antiquewhite;
+    border:black;
+    border: 10px;
+}
+.border{
+    border: 10px black ;
+    opacity: 80%;
+}
+.row{
+    padding-left: 5%;
+}

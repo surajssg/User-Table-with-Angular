@@ -5,7 +5,7 @@ import {  HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogComponent } from './dialog/dialog.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -34,13 +34,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { EmptyComponent } from './components/empty/empty.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EmptyComponent
   ],
   imports: [
     BrowserModule,
@@ -75,8 +78,9 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatSnackBarModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
-    })
-  ],
+    }),
+    AppRoutingModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents:[ConfirmDialogComponent]
