@@ -19,32 +19,19 @@
       <input
         formControlName="mobile"
         matInput
-        placeholder="Enter User's mobile number"
+        placeholder="Enter User's mobile number "
+        id="mobileNumber"
       />
     </mat-form-field>
-
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Date</mat-label>
-      <input
-        formControlName="date"
-        matInput
-        placeholder="Enter User's mobile number"
-        value={{currentDate}}
-      />
-      
-    </mat-form-field> -->
-    <!-- formControlName="date" -->
-  </form>
+  </form>  
 </div>
-
 <div mat-dialog-option [align]="'end'">
   <button mat-raised-button color="warn" mat-dialog-close>Close</button>
   <button
     style="margin-left: 8px"
     mat-raised-button
     color="primary"
-    (click)="addUser(actionBtn)"
-  >
+    (click)="addUser(actionBtn)">
     {{ actionBtn }}
   </button>
 </div>

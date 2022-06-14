@@ -7,13 +7,9 @@ describe('Component: User',() => {
             declarations : [ DialogComponent ]
         });
     })
-
     it('should create the app',()=>{
         let fixture = TestBed.createComponent(DialogComponent);
         let app = fixture.debugElement.componentInstance;
         expect(app).toBeTruthy();
     })
-
-    
-
 });

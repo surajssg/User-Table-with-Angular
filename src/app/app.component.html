@@ -1,3 +1,4 @@
+<div *ngIf="showComponent">
 <!-- toolbar -->
 <base href="/">
 <mat-toolbar color="primary">
@@ -12,8 +13,6 @@
     Add User
   </button>
 </mat-toolbar>
-
-
 <!-- filter -->
 <div class="container">
   <div style="margin-top: 10px">
@@ -26,30 +25,33 @@
         #input
       />
     </mat-form-field>
-
-
       <!-- table -->
       <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
 
         <!-- userName Column -->
         <ng-container matColumnDef="userName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>UserName</b> </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>UserName</b> <br></th>
           <td mat-cell *matCellDef="let row">{{ row.userName }}</td>
         </ng-container>
 
-
-
         <!-- Date Column -->
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef><b>Date</b></th>
-          <td mat-cell *matCellDef="let row"> CreatedOn:[ {{row.createdDate | date:'yyyy-MM-dd'}} ]<br> LastUpdatedOn: [ {{row.date | date:'yyyy-MM-dd'}} ] <br> 
+          <th mat-header-cell *matHeaderCellDef><b> Created Date</b></th>
+          <td mat-cell *matCellDef="let row">  {{row.createdDate | date:'M/d/yy' }}
+          </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date1">
+          <th mat-header-cell *matHeaderCellDef><b>Updated Date</b></th>
+          <td mat-cell *matCellDef="let row"> {{row.date | date:'M/d/yy, h:mm a'}}  <br> 
           </td>
         </ng-container>
 
         <!-- Age Column -->
         <ng-container matColumnDef="age">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header><b>Age</b></th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Age</b><br></th>
           <td mat-cell *matCellDef="let row">{{ row.age }}</td>
 
         </ng-container>
@@ -57,7 +59,7 @@
 
         <!-- mobile Column -->
         <ng-container matColumnDef="mobile">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Mobile</b>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header><b>Mobile</b><br></th>
           <td mat-cell *matCellDef="let row">{{ row.mobile }}</td>
         </ng-container>
 
@@ -89,9 +91,16 @@
         [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of users"
       ></mat-paginator>
+
+
     </div>
   </div>
+  </div>
 </div>
-<div>
+
+
+<div *ngIf="!showComponent">
   <router-outlet></router-outlet>
 </div>
+<mat-spinner *ngIf="need"></mat-spinner>
+

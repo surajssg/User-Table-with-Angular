@@ -9,8 +9,9 @@ import { DsService } from './services/shared/ds.service';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseService } from './services/firebase.service';
 import { Subject } from 'rxjs';
-import { EmptyComponent } from './components/empty/empty.component';
 import {  Router } from '@angular/router';   
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,19 @@ import {  Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  static getAllUsers() {
+    throw new Error('Method not implemented.');
+  }
   private refreshneeded = new Subject<void>();
   text = '!!User deleted successfully';
   text4 = 'User added successfully';
   show:boolean = false;
+ showComponent:boolean = true;
+ need:boolean = false;
+
+
   currentDate = new Date();
-  displayedColumns: string[] = ['userName', 'date','age', 'mobile', 'action'];
+  displayedColumns: string[] = ['userName', 'date','date1','age', 'mobile', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator)paginator!: MatPaginator;
@@ -35,8 +43,8 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     private fbService: FirebaseService ,
     private router : Router ,
+    private spinner:NgxSpinnerService
   ) {}
-
   public ngOnInit(): void {  
     this.getAllUsers();
   }
@@ -51,8 +59,7 @@ export class AppComponent implements OnInit {
         }
         this.getAllUsers();
       });
-  }
-
+  };
   getAllUsers(): any {
     let arr: any = [];
     this.fbService.getUser().subscribe((res: any) => {
@@ -66,8 +73,12 @@ export class AppComponent implements OnInit {
         arr.push(users[key]);
       });
       }else{
-        // this.dialog.open(EmptyComponent);
         this.router.navigate(['empty']);
+        console.log(this.showComponent);
+        if (this.router.url === '/empty') {
+          this.showComponent = false;
+          console.log(this.showComponent);
+          }
       }
       this.dataSource = new MatTableDataSource(arr);
       this.dataSource.paginator = this.paginator;
@@ -106,19 +117,16 @@ export class AppComponent implements OnInit {
         }
       });
   }
-
   async deleteUserFunction(data: any) {
     const res = await new Promise<any>((response) => {
       this.fbService.deleteUser(data.id).subscribe(response);
     });
-
     this.snackBar.open(this.text.toString(), '', {
       duration: 3000,
       verticalPosition: 'top',
     });
     this.getAllUsers();
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -126,4 +134,7 @@ export class AppComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
+  }
+  
+
+
