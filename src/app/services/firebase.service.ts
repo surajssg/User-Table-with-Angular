@@ -22,7 +22,7 @@ export class FirebaseService implements OnInit {
   postUser(postData: any): Observable<any> {
     console.log(postData);
     const res = this.http.post(
-      'https://assignment-77729-default-rtdb.firebaseio.com/posts.json',
+      'https://usersdatabase-4f37c-default-rtdb.firebaseio.com/posts.json',
       postData
     );
     return res;
@@ -31,13 +31,13 @@ export class FirebaseService implements OnInit {
   
   getUser(): Observable<any> {
     return this.http.get<any>(
-      'https://assignment-77729-default-rtdb.firebaseio.com/posts.json'
+      'https://usersdatabase-4f37c-default-rtdb.firebaseio.com/posts.json'
     );
   }
 
   deleteUser(hashKey: number) {
     const endPoint =
-      'https://assignment-77729-default-rtdb.firebaseio.com/posts/' +
+      'https://usersdatabase-4f37c-default-rtdb.firebaseio.com/posts/' +
       hashKey +
       '/.json';
 
@@ -46,7 +46,7 @@ export class FirebaseService implements OnInit {
 
   putUser(data: any, id: any) {
     const url =
-      'https://assignment-77729-default-rtdb.firebaseio.com/posts/' +
+      'https://usersdatabase-4f37c-default-rtdb.firebaseio.com/posts/' +
       id +
       '.json';
     return this.http.put<any>(url, data);
